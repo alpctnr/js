@@ -116,4 +116,60 @@ console.log(filteredArray);
 const filteredArrayWithArrowFunction = prices.filter(p => p > 6);
 console.log(filteredArrayWithArrowFunction);
 
-// **Reduce
+// reduce()
+const sum = prices.reduce((previousValue, currentValue, currentindex, prices) => {
+    return previousValue + currentValue;
+}, 0);
+console.log(sum);
+
+// split() nad join()
+const dataToSplit = 'New York;10.1;200';
+const splittedData = dataToSplit.split(';');
+console.log(splittedData);
+
+const nameFragements = ['Bilal', 'Cetiner'];
+const name = nameFragements.join(' ');
+console.log(name);
+
+// Spread ... => export values
+const copiedNameFragments = [...nameFragements]; // Creates new object, not taking reference values exported with ...
+nameFragements.push('Mr');
+console.log(nameFragements, copiedNameFragments);
+
+console.log(Math.min(...sortedPrices));
+
+// Sets
+// Sets guaranties uniq values
+// Sets does not include keys
+const idsSet = new Set([1, 2, 3]);
+idsSet.add(5);
+console.log(idsSet);
+console.log(idsSet.has(1));
+
+for (entry of idsSet.entries()) {
+    console.log(entry);
+}
+
+// Maps
+// Maps has key value pairs
+const person1 = {name: 'Bilal'};
+const person2 = {name: 'Yenal'};
+
+const person1Data = new Map([[person1, [{ age: 30}]]]);
+console.log(person1Data.get(person1));
+console.log(person1Data.has(person2));
+
+
+// WeakSet()
+const personToWeakSet = {name: 'Bilal'};
+const personsToWeakSet = new WeakSet();
+personsToWeakSet.add(personToWeakSet);
+personToWeakSet = null; // Garbage collector works !
+console.log(personsToWeakSet);
+
+
+// WeakMap()
+const personsToWeakMap = new WeakMap();
+personsToWeakMap.set(personsToWeakMap, 'Extra Info');
+personsToWeakMap = null; // Garbage collector works !
+console.log(personsToWeakMap);
