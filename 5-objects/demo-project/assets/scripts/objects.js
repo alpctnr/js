@@ -19,16 +19,19 @@ const renderMovies = (filter = '') => {
         : movies.filter(movie => movie.info.title.includes(filter));
 
     filteredMovies.forEach((movie) => {
-        const movieEl = document.createElement('li');
-        let text = movie.info.title + ' - ';
-        movieEl.textContent = movie.info.title;
-        for (const key in movie.info) {
-            if (key !== 'title') {
-                text = text + `${key}: ${movie.info[key]}`;
+        if ('info' in movie) { // Checking existstance
+            const movieEl = document.createElement('li');
+            const { info: movieInfo, ...otherProps } = movie; // Destructuring with new alias
+            let text = movie.getFormattedTitle() + ' - ';
+            movieEl.textContent = movieInfo.title;
+            for (const key in movieInfo) {
+                if (key !== 'title') {
+                    text = text + `${key}: ${movieInfo[key]}`;
+                }
             }
+            movieEl.textContent = text;
+            movieList.append(movieEl);
         }
-        movieEl.textContent = text;
-        movieList.append(movieEl);
     });
 };
 
@@ -36,7 +39,6 @@ const addMovieHandler = () => {
     const title = document.getElementById('title').value;
     const extraName = document.getElementById('extra-name').value;
     const extraValue = document.getElementById('extra-value').value;
-
 
     if (
         title.trim() === '' ||
@@ -51,7 +53,10 @@ const addMovieHandler = () => {
             title,
             [extraName]: extraValue // Used [] to store dynamic property key;
         },
-        id: Math.random()
+        id: Math.random(),
+        getFormattedTitle: function () {
+            return this.info.title.toUpperCase();
+        }
 
     };
 
